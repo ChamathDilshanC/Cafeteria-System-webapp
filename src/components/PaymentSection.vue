@@ -129,7 +129,9 @@ onMounted(load);
 async function load() {
   loading.value = true;
   try {
-    orders.value = await OrderAPI.getPendingPayment();
+    const data = await OrderAPI.getPendingPayment();
+    // Filter out canceled orders so they don't show up in the payment section
+    orders.value = data.filter(order => order.status !== 'CANCELLED');
   } finally {
     loading.value = false;
   }
