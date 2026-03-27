@@ -11,9 +11,13 @@
       >
         <div class="flex items-center gap-3">
           <div
-            class="grid h-10 w-10 place-items-center rounded-xl bg-indigo-600 text-white shadow-sm"
+            class="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm"
           >
-            <UtensilsCrossed class="h-5 w-5" />
+            <img
+              src="/logo.png"
+              alt="Logo"
+              class="h-full w-full object-cover"
+            />
           </div>
           <div>
             <p class="text-sm font-medium text-slate-500">
@@ -115,7 +119,6 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from "vue";
 import {
   BanknoteIcon,
   ChefHat,
@@ -124,25 +127,25 @@ import {
   Receipt,
   Settings,
   Sparkles,
-  UtensilsCrossed,
-} from "lucide-vue-next";
-import AuthView from "./components/AuthView.vue";
-import AdminSection from "./components/AdminSection.vue";
-import KitchenSection from "./components/KitchenSection.vue";
-import MenuSection from "./components/MenuSection.vue";
-import OrderSection from "./components/OrderSection.vue";
-import PaymentSection from "./components/PaymentSection.vue";
+} from 'lucide-vue-next';
+import { computed, onMounted, ref } from 'vue';
+import AdminSection from './components/AdminSection.vue';
+import AuthView from './components/AuthView.vue';
+import KitchenSection from './components/KitchenSection.vue';
+import MenuSection from './components/MenuSection.vue';
+import OrderSection from './components/OrderSection.vue';
+import PaymentSection from './components/PaymentSection.vue';
 
-const view = ref("menu");
+const view = ref('menu');
 const user = ref(null);
 
 const isLoggedIn = computed(() => !!user.value);
 const isStaff = computed(
-  () => user.value?.role === "STAFF" || user.value?.role === "ADMIN",
+  () => user.value?.role === 'STAFF' || user.value?.role === 'ADMIN'
 );
 
 onMounted(() => {
-  const stored = localStorage.getItem("auth_user");
+  const stored = localStorage.getItem('auth_user');
   if (stored) {
     user.value = JSON.parse(stored);
   }
@@ -152,24 +155,24 @@ function onLogin(userData) {
   user.value = userData;
   // Staff/Admin defaults to Kitchen view; customers go to Menu
   view.value =
-    userData.role === "STAFF" || userData.role === "ADMIN"
-      ? "payments"
-      : "menu";
+    userData.role === 'STAFF' || userData.role === 'ADMIN'
+      ? 'payments'
+      : 'menu';
 }
 
 function logout() {
-  localStorage.removeItem("auth_token");
-  localStorage.removeItem("auth_user");
+  localStorage.removeItem('auth_token');
+  localStorage.removeItem('auth_user');
   user.value = null;
 }
 
 function navButtonClass(targetView) {
   const base =
-    "inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium transition-all duration-300";
+    'inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm font-medium transition-all duration-300';
   const active =
-    "border-indigo-600 bg-indigo-600 text-white shadow-sm hover:bg-indigo-500";
+    'border-indigo-600 bg-indigo-600 text-white shadow-sm hover:bg-indigo-500';
   const idle =
-    "border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:text-indigo-600 hover:shadow-sm";
+    'border-slate-200 bg-white text-slate-700 hover:border-indigo-200 hover:text-indigo-600 hover:shadow-sm';
 
   return `${base} ${view.value === targetView ? active : idle}`;
 }

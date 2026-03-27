@@ -59,50 +59,12 @@
     </p>
 
     <div v-else class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-3">
-      <article
+      <FoodMenuItemCard
         v-for="item in items"
         :key="item.id"
-        class="group overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-lg"
-      >
-        <div class="relative h-44 overflow-hidden bg-slate-100">
-          <img
-            v-if="item.imageUrl"
-            :src="item.imageUrl"
-            :alt="item.name"
-            class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-          />
-          <div
-            v-else
-            class="grid h-full w-full place-items-center bg-gradient-to-br from-slate-100 to-slate-200 text-4xl"
-          >
-            🍽
-          </div>
-          <span
-            class="absolute left-3 top-3 rounded-full bg-emerald-100 px-2.5 py-1 text-xs font-semibold text-emerald-800"
-          >
-            Rs {{ formatCurrency(item.price) }}
-          </span>
-        </div>
-
-        <div class="space-y-3 p-4">
-          <div>
-            <h3 class="text-base font-semibold text-slate-900">
-              {{ item.name }}
-            </h3>
-            <p class="mt-1 line-clamp-2 text-sm text-slate-500">
-              {{ item.description || "Chef special from our curated menu." }}
-            </p>
-          </div>
-
-          <button
-            class="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-indigo-600 px-4 py-2.5 text-sm font-semibold text-white transition-all duration-300 hover:bg-indigo-500 hover:shadow-lg"
-            @click="addToCart(item)"
-          >
-            <Plus class="h-4 w-4" />
-            Add to Cart
-          </button>
-        </div>
-      </article>
+        :item="item"
+        @add-to-cart="addToCart"
+      />
     </div>
 
     <button
@@ -124,11 +86,12 @@
 
 <script setup>
 import { onMounted, ref } from "vue";
-import { Plus, RefreshCcw, ShoppingCart } from "lucide-vue-next";
+import { RefreshCcw, ShoppingCart } from "lucide-vue-next";
 import { MenuAPI } from "../api/index.js";
 import { formatCurrency } from "../utils/currency.js";
 import { cartCount, cartTotal, addToCart } from "../stores/cartStore.js";
 import Cart from "./Cart.vue";
+import FoodMenuItemCard from "./FoodMenuItemCard.vue";
 
 const props = defineProps(["user"]);
 const emit = defineEmits(["go-orders"]);
