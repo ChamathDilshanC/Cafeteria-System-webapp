@@ -14,6 +14,7 @@ A modern, responsive web application for managing cafeteria operations including
 ## Features
 
 ### Customer Features
+
 - **User Authentication**: Secure login and registration
 - **Browse Menu**: View available food items with images, descriptions, and prices
 - **Shopping Cart**: Add/remove items, adjust quantities
@@ -21,6 +22,7 @@ A modern, responsive web application for managing cafeteria operations including
 - **Order Tracking**: View order status (pending, preparing, ready, completed)
 
 ### Staff/Admin Features
+
 - **Payment Management**: View and process all orders, mark orders as paid
 - **Kitchen Operations**: View pending orders, mark items as preparing/ready
 - **Admin Panel**:
@@ -30,6 +32,7 @@ A modern, responsive web application for managing cafeteria operations including
   - Comprehensive system management
 
 ### User Roles
+
 - **CUSTOMER**: Access to menu browsing and personal orders
 - **STAFF**: Access to payments and kitchen operations
 - **ADMIN**: Full system access including admin panel
@@ -44,6 +47,7 @@ A modern, responsive web application for managing cafeteria operations including
 ## Installation
 
 1. Clone the repository or navigate to the webapp directory:
+
    ```bash
    cd webapp
    ```
@@ -58,7 +62,7 @@ A modern, responsive web application for managing cafeteria operations including
 The application connects to the backend API Gateway. The base URL is configured in `src/api/index.js`:
 
 ```javascript
-const API_BASE_URL = "http://localhost:8080/api";
+const API_BASE_URL = 'http://localhost:8080/api';
 ```
 
 Update this URL if your API Gateway runs on a different host/port.
@@ -73,7 +77,7 @@ Start the development server with hot-reload:
 npm run dev
 ```
 
-The application will be available at `http://localhost:5173`
+The application will be available at `http://localhost:3000`
 
 ### Production Build
 
@@ -130,12 +134,12 @@ webapp/
 
 The webapp integrates with the following backend services through the API Gateway:
 
-| Endpoint | Service | Description |
-|----------|---------|-------------|
-| `/api/users/**` | user-service | Authentication, user management |
-| `/api/menu/**` | menu-service | Menu items, categories |
-| `/api/orders/**` | order-service | Order placement and tracking |
-| `/api/kitchen/**` | kitchen-service | Kitchen operations |
+| Endpoint          | Service         | Description                     |
+| ----------------- | --------------- | ------------------------------- |
+| `/api/users/**`   | user-service    | Authentication, user management |
+| `/api/menu/**`    | menu-service    | Menu items, categories          |
+| `/api/orders/**`  | order-service   | Order placement and tracking    |
+| `/api/kitchen/**` | kitchen-service | Kitchen operations              |
 
 ### Authentication
 
@@ -161,6 +165,7 @@ The webapp integrates with the following backend services through the API Gatewa
 ### Icons
 
 Uses Lucide Vue Next icon library:
+
 - UtensilsCrossed - App logo
 - LayoutGrid - Menu navigation
 - Receipt - Orders navigation
@@ -202,6 +207,7 @@ EXPOSE 80
 ### Google Cloud Platform
 
 For GCP deployment:
+
 1. Build the application: `npm run build`
 2. Deploy the `dist/` folder to GCP App Engine, Cloud Run, or Cloud Storage + CDN
 3. Update API_BASE_URL to point to your production API Gateway
@@ -215,12 +221,15 @@ For GCP deployment:
 ## Common Issues
 
 ### CORS Errors
+
 Ensure the API Gateway has CORS configured to allow requests from the webapp origin.
 
 ### 401 Unauthorized
+
 Check that the JWT token is valid and not expired. Logout and login again.
 
 ### Menu Images Not Loading
+
 Verify that Google Cloud Storage bucket has public read access for menu item images.
 
 ## Contributing
