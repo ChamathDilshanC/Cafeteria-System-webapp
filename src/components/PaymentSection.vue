@@ -1,17 +1,19 @@
 <template>
   <section class="space-y-6">
     <div
-      class="flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm sm:flex-row sm:items-center sm:justify-between"
+      class="flex flex-col gap-4 rounded-2xl border border-white/15 bg-white/25 p-5 shadow-xl backdrop-blur-xl sm:flex-row sm:items-center sm:justify-between dark:border-white/10 dark:bg-white/5"
     >
       <div>
-        <h2 class="text-2xl font-bold text-slate-900">Payment Verification</h2>
-        <p class="text-sm text-slate-500">
+        <h2 class="text-2xl font-bold text-slate-900 dark:text-white">
+          Payment Verification
+        </h2>
+        <p class="text-sm text-slate-500 dark:text-slate-400">
           Approve cash payments received at the counter to send orders to
           kitchen.
         </p>
       </div>
       <button
-        class="inline-flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-all duration-300 hover:border-indigo-200 hover:text-indigo-600 hover:shadow-sm"
+        class="inline-flex items-center gap-2 rounded-xl border border-indigo-200/60 bg-gradient-to-r from-blue-50/60 to-indigo-50/60 px-4 py-2 text-sm font-semibold text-indigo-700 shadow-sm backdrop-blur-md transition-all duration-300 hover:from-blue-100/60 hover:to-indigo-100/60 hover:shadow-md dark:border-indigo-500/30 dark:from-indigo-900/20 dark:to-blue-900/20 dark:text-indigo-300 dark:hover:from-indigo-900/40 dark:hover:to-blue-900/40"
         @click="load"
       >
         <RefreshCcw class="h-4 w-4" />
@@ -21,13 +23,13 @@
 
     <p
       v-if="loading"
-      class="rounded-xl border border-slate-200 bg-white px-4 py-8 text-center text-sm text-slate-500"
+      class="rounded-xl border border-white/15 bg-white/25 px-4 py-8 text-center text-sm text-slate-500 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5 dark:text-slate-400"
     >
       Loading pending payments...
     </p>
     <p
       v-else-if="!orders.length"
-      class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-8 text-center text-sm text-emerald-700"
+      class="rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-8 text-center text-sm text-emerald-700 dark:border-emerald-900 dark:bg-emerald-950 dark:text-emerald-200"
     >
       ✅ No pending payments. All orders are settled.
     </p>
@@ -36,7 +38,7 @@
       <article
         v-for="order in orders"
         :key="order.id"
-        class="rounded-2xl border border-amber-200 bg-white p-5 shadow-sm transition-all duration-300 hover:shadow-lg"
+        class="rounded-2xl border border-amber-200 bg-white p-5 shadow-xl backdrop-blur-xl transition-all duration-300 hover:shadow-2xl dark:border-amber-900 dark:bg-slate-800/30"
       >
         <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -60,7 +62,9 @@
           </div>
         </div>
 
-        <div class="overflow-x-auto rounded-xl border border-slate-200">
+        <div
+          class="overflow-x-auto rounded-xl border border-white/15 dark:border-white/10"
+        >
           <table class="min-w-full divide-y divide-slate-200 text-sm">
             <thead
               class="bg-slate-50 text-left text-xs uppercase tracking-wide text-slate-500"
@@ -104,7 +108,7 @@
               @click="approvePayment(order.id)"
             >
               <CheckCircle class="h-4 w-4" />
-              {{ approving === order.id ? "Approving..." : "Approve Payment" }}
+              {{ approving === order.id ? 'Approving...' : 'Approve Payment' }}
             </button>
           </div>
         </div>
@@ -114,10 +118,10 @@
 </template>
 
 <script setup>
-import { CheckCircle, RefreshCcw } from "lucide-vue-next";
-import { onMounted, reactive, ref } from "vue";
-import { OrderAPI } from "../api/index.js";
-import { formatCurrency } from "../utils/currency.js";
+import { CheckCircle, RefreshCcw } from 'lucide-vue-next';
+import { onMounted, reactive, ref } from 'vue';
+import { OrderAPI } from '../api/index.js';
+import { formatCurrency } from '../utils/currency.js';
 
 const orders = ref([]);
 const loading = ref(false);

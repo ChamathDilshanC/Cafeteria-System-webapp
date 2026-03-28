@@ -76,22 +76,25 @@
       <!-- Add to Cart Button -->
       <button
         class="mt-0.5 w-full rounded-full py-2.5 text-sm font-bold transition-all duration-300 shadow-sm"
-        :class="
+        :class="[
           isAvailable
-            ? 'bg-white text-black hover:bg-gray-100 hover:scale-[1.02] active:scale-[0.98]'
-            : 'bg-white/20 text-white/50 cursor-not-allowed backdrop-blur-sm'
-        "
+            ? 'bg-white text-black hover:bg-gray-100 hover:scale-[1.02]'
+            : 'bg-white/20 text-white/50 cursor-not-allowed backdrop-blur-sm',
+          isAnimating ? 'animate-add-to-cart' : 'active:scale-[0.98]',
+        ]"
         :disabled="!isAvailable"
         @click="handleAddToCart"
       >
-        {{ isAvailable ? 'Add to Cart' : 'Unavailable' }}
+        {{
+          isAnimating ? '✓ Added!' : isAvailable ? 'Add to Cart' : 'Unavailable'
+        }}
       </button>
     </div>
   </article>
 </template>
 
 <script setup>
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { formatCurrency } from '../utils/currency.js';
 
 const props = defineProps({
@@ -102,6 +105,7 @@ const props = defineProps({
 });
 
 const emit = defineEmits(['add-to-cart']);
+const isAnimating = ref(false);
 
 // Compute availability - handles different field names
 const isAvailable = computed(() => {
@@ -120,8 +124,32 @@ const isAvailable = computed(() => {
 });
 
 function handleAddToCart() {
-  if (isAvailable.value) {
+  if (isAvailable.value && !isAnimating.value) {
+    isAnimating.value = true;
     emit('add-to-cart', props.item);
+
+    // Reset animation after 600ms
+    setTimeout(() => {
+      isAnimating.value = false;
+    }, 600);
   }
 }
 </script>
+
+<style scoped>
+@keyframes add-to-cart {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-add-to-cart {
+  animation: add-to-cart 0.6s ease-in-out;
+}
+</style>
