@@ -168,12 +168,14 @@
 <script setup>
 import { reactive, ref } from 'vue';
 import { AuthAPI } from '../api/index.js';
+import { useAlerts } from '../composables/useAlerts.js';
 
 const emit = defineEmits(['logged-in']);
 const mode = ref('login');
 const form = reactive({ name: '', email: '', password: '', role: 'CUSTOMER' });
 const error = ref('');
 const loading = ref(false);
+const { addAlert } = useAlerts();
 
 async function handleLogin() {
   error.value = '';
@@ -186,6 +188,7 @@ async function handleLogin() {
     saveAndEmit(data);
   } catch (e) {
     error.value = e.message;
+    addAlert(e.message, 'error');
   } finally {
     loading.value = false;
   }
@@ -197,8 +200,10 @@ async function handleRegister() {
   try {
     const data = await AuthAPI.register(form);
     saveAndEmit(data);
+    addAlert('Account created successfully!', 'success');
   } catch (e) {
     error.value = e.message;
+    addAlert(e.message, 'error');
   } finally {
     loading.value = false;
   }

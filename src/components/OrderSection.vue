@@ -138,11 +138,13 @@
 import { RefreshCcw } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
 import { OrderAPI } from '../api/index.js';
+import { useAlerts } from '../composables/useAlerts.js';
 import { formatCurrency } from '../utils/currency.js';
 
 const props = defineProps(['user']);
 const orders = ref([]);
 const loading = ref(false);
+const { addAlert } = useAlerts();
 
 onMounted(load);
 
@@ -150,14 +152,21 @@ async function load() {
   loading.value = true;
   try {
     orders.value = await OrderAPI.getMyOrders();
+  } catch (e) {
+    addAlert('Error loading orders', 'error');
   } finally {
     loading.value = false;
   }
 }
 
 async function cancel(id) {
-  await OrderAPI.cancel(id);
-  await load();
+  try {
+    await OrderAPI.cancel(id);
+    addAlert(`Order #${id} cancelled`, 'success');
+    await load();
+  } catch (e) {
+    addAlert('Failed to cancel order', 'error');
+  }
 }
 
 function formatDate(iso) {

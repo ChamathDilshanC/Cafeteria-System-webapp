@@ -106,6 +106,7 @@
 import { RefreshCcw, ShoppingCart } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
 import { MenuAPI } from '../api/index.js';
+import { useAlerts } from '../composables/useAlerts.js';
 import { addToCart, cartCount, cartTotal } from '../stores/cartStore.js';
 import { getCategories, getLoadedCategories } from '../stores/menuStore.js';
 import { formatCurrency } from '../utils/currency.js';
@@ -121,6 +122,7 @@ const selectedCategory = ref(null);
 const loading = ref(false);
 const showCart = ref(false);
 const cartAnimating = ref(false);
+const { addAlert } = useAlerts();
 
 onMounted(async () => {
   // Load categories from cache (only fetches once)
@@ -137,14 +139,17 @@ async function loadItems() {
   loading.value = true;
   try {
     items.value = await MenuAPI.getItems(selectedCategory.value);
+  } catch (e) {
+    addAlert('Error loading menu items', 'error');
   } finally {
     loading.value = false;
   }
 }
 
 function handleAddToCart(item) {
-  addToCart(item.id, item.name, item.price);
+  addToCart(item);
   triggerCartAnimation();
+  addAlert(`${item.name} added to cart`, 'success');
 }
 
 function triggerCartAnimation() {

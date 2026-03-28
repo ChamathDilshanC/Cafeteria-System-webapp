@@ -114,9 +114,11 @@
 import { RefreshCcw } from 'lucide-vue-next';
 import { onMounted, ref } from 'vue';
 import { KitchenAPI } from '../api/index.js';
+import { useAlerts } from '../composables/useAlerts.js';
 
 const tickets = ref([]);
 const loading = ref(false);
+const { addAlert } = useAlerts();
 
 onMounted(load);
 
@@ -124,14 +126,21 @@ async function load() {
   loading.value = true;
   try {
     tickets.value = await KitchenAPI.getQueue();
+  } catch (e) {
+    addAlert('Failed to load kitchen queue', 'error');
   } finally {
     loading.value = false;
   }
 }
 
 async function updateStatus(ticketId, status) {
-  await KitchenAPI.updateStatus(ticketId, status);
-  await load();
+  try {
+    await KitchenAPI.updateStatus(ticketId, status);
+    addAlert(`Ticket #${ticketId} status updated to ${status}`, 'success');
+    await load();
+  } catch (e) {
+    addAlert('Failed to update status', 'error');
+  }
 }
 
 function formatDate(iso) {

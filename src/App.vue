@@ -1,5 +1,7 @@
 <template>
-  <div :class="isDark ? 'dark' : ''" class="min-h-screen w-full">
+  <div :class="isDark ? 'dark' : ''" class="min-h-screen w-full relative">
+    <AppAlerts />
+
     <!-- Dark Mode Gradient Background -->
     <div
       v-if="isDark"
@@ -171,16 +173,19 @@ import {
 } from 'lucide-vue-next';
 import { computed, onMounted, ref } from 'vue';
 import AdminSection from './components/AdminSection.vue';
+import AppAlerts from './components/AppAlerts.vue';
 import AuthView from './components/AuthView.vue';
 import KitchenSection from './components/KitchenSection.vue';
 import MenuSection from './components/MenuSection.vue';
 import OrderSection from './components/OrderSection.vue';
 import PaymentSection from './components/PaymentSection.vue';
+import { useAlerts } from './composables/useAlerts.js';
 import { useDarkMode } from './composables/useDarkMode.js';
 
 const view = ref('menu');
 const user = ref(null);
 const { isDark, toggleDarkMode } = useDarkMode();
+const { addAlert } = useAlerts();
 
 const isLoggedIn = computed(() => !!user.value);
 const isStaff = computed(
@@ -201,12 +206,15 @@ function onLogin(userData) {
     userData.role === 'STAFF' || userData.role === 'ADMIN'
       ? 'payments'
       : 'menu';
+
+  addAlert(`Welcome back, ${userData.name}!`, 'success');
 }
 
 function logout() {
   localStorage.removeItem('auth_token');
   localStorage.removeItem('auth_user');
   user.value = null;
+  addAlert('Logged out successfully', 'info');
 }
 
 function navButtonClass(targetView) {

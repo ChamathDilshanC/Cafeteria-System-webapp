@@ -1,10 +1,14 @@
 <template>
   <section class="space-y-8">
     <!-- ── Categories ─────────────────────────────────────────── -->
-    <div class="rounded-2xl border border-white/15 bg-white/25 p-5 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
+    <div
+      class="rounded-2xl border border-white/15 bg-white/25 p-5 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5"
+    >
       <div class="mb-4 flex items-center justify-between">
         <div>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">Manage Categories</h2>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+            Manage Categories
+          </h2>
           <p class="text-sm text-slate-500 dark:text-slate-400">
             Add, edit or remove menu categories.
           </p>
@@ -36,7 +40,7 @@
           :disabled="!catForm.name.trim()"
           @click="saveCategory"
         >
-          {{ catForm.id ? "Update" : "Create" }}
+          {{ catForm.id ? 'Update' : 'Create' }}
         </button>
         <button
           class="rounded-xl border px-3 py-2 text-sm hover:bg-slate-50 dark:border-slate-600 dark:hover:bg-slate-700"
@@ -53,8 +57,12 @@
         {{ catError }}
       </p>
 
-      <div class="overflow-x-auto rounded-xl border border-white/15 dark:border-white/10">
-        <table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700">
+      <div
+        class="overflow-x-auto rounded-xl border border-white/15 dark:border-white/10"
+      >
+        <table
+          class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700"
+        >
           <thead
             class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400"
           >
@@ -65,14 +73,18 @@
               <th class="px-4 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 bg-white dark:divide-slate-700 dark:bg-slate-800">
+          <tbody
+            class="divide-y divide-slate-100 bg-white dark:divide-slate-700 dark:bg-slate-800"
+          >
             <tr v-for="cat in categories" :key="cat.id">
-              <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ cat.id }}</td>
+              <td class="px-4 py-3 text-slate-500 dark:text-slate-400">
+                {{ cat.id }}
+              </td>
               <td class="px-4 py-3 font-medium text-slate-900 dark:text-white">
                 {{ cat.name }}
               </td>
               <td class="px-4 py-3 text-slate-500 dark:text-slate-400">
-                {{ cat.description || "—" }}
+                {{ cat.description || '—' }}
               </td>
               <td class="px-4 py-3 text-right">
                 <div class="flex gap-6 justify-end">
@@ -92,7 +104,10 @@
               </td>
             </tr>
             <tr v-if="!categories.length">
-              <td colspan="4" class="px-4 py-6 text-center text-slate-400 dark:text-slate-500">
+              <td
+                colspan="4"
+                class="px-4 py-6 text-center text-slate-400 dark:text-slate-500"
+              >
                 No categories yet.
               </td>
             </tr>
@@ -102,10 +117,14 @@
     </div>
 
     <!-- ── Menu Items ──────────────────────────────────────────── -->
-    <div class="rounded-2xl border border-white/15 bg-white/25 p-5 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5">
+    <div
+      class="rounded-2xl border border-white/15 bg-white/25 p-5 shadow-xl backdrop-blur-xl dark:border-white/10 dark:bg-white/5"
+    >
       <div class="mb-4 flex items-center justify-between">
         <div>
-          <h2 class="text-xl font-bold text-slate-900 dark:text-white">Manage Menu Items</h2>
+          <h2 class="text-xl font-bold text-slate-900 dark:text-white">
+            Manage Menu Items
+          </h2>
           <p class="text-sm text-slate-500 dark:text-slate-400">
             Create, edit or delete menu items with optional image upload.
           </p>
@@ -129,13 +148,13 @@
             placeholder="Name *"
             class="input-field"
           />
-            <input
-              v-model="itemForm.price"
-              type="number"
-              step="0.01"
-              placeholder="Price (Rs) *"
-              class="input-field"
-            />
+          <input
+            v-model="itemForm.price"
+            type="number"
+            step="0.01"
+            placeholder="Price (Rs) *"
+            class="input-field"
+          />
           <textarea
             v-model="itemForm.description"
             placeholder="Description"
@@ -148,9 +167,7 @@
               {{ cat.name }}
             </option>
           </select>
-          <label
-            class="flex items-center gap-2"
-          >
+          <label class="flex items-center gap-2">
             <input
               v-model="itemForm.available"
               type="checkbox"
@@ -169,11 +186,14 @@
           </label>
         </div>
         <div>
-          <label class="block text-sm font-medium text-slate-600 mb-2 dark:text-slate-400"
+          <label
+            class="block text-sm font-medium text-slate-600 mb-2 dark:text-slate-400"
             >Image (optional)</label
           >
           <div class="flex items-end gap-4">
-            <label class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 cursor-pointer hover:bg-slate-200 transition-colors dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600">
+            <label
+              class="inline-flex items-center gap-2 rounded-xl bg-slate-100 px-4 py-2 text-sm font-medium text-slate-700 cursor-pointer hover:bg-slate-200 transition-colors dark:bg-slate-700 dark:text-slate-300 dark:hover:bg-slate-600"
+            >
               <span>📁 Choose File</span>
               <input
                 ref="imageInput"
@@ -209,10 +229,10 @@
           >
             {{
               itemSaving
-                ? "Saving..."
+                ? 'Saving...'
                 : itemForm.id
-                  ? "Update Item"
-                  : "Create Item"
+                  ? 'Update Item'
+                  : 'Create Item'
             }}
           </button>
           <button
@@ -231,8 +251,12 @@
         {{ itemError }}
       </p>
 
-      <div class="overflow-x-auto rounded-xl border border-white/15 dark:border-white/10">
-        <table class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700">
+      <div
+        class="overflow-x-auto rounded-xl border border-white/15 dark:border-white/10"
+      >
+        <table
+          class="min-w-full divide-y divide-slate-200 text-sm dark:divide-slate-700"
+        >
           <thead
             class="bg-slate-50 text-xs uppercase tracking-wide text-slate-500 dark:bg-slate-900 dark:text-slate-400"
           >
@@ -245,7 +269,9 @@
               <th class="px-4 py-3 text-right">Actions</th>
             </tr>
           </thead>
-          <tbody class="divide-y divide-slate-100 bg-white dark:divide-slate-700 dark:bg-slate-800">
+          <tbody
+            class="divide-y divide-slate-100 bg-white dark:divide-slate-700 dark:bg-slate-800"
+          >
             <tr v-for="item in menuItems" :key="item.id">
               <td class="px-4 py-3">
                 <img
@@ -263,7 +289,9 @@
               <td class="px-4 py-3 font-medium text-slate-900 dark:text-white">
                 {{ item.name }}
               </td>
-              <td class="px-4 py-3 text-slate-500 dark:text-slate-400">{{ item.categoryName }}</td>
+              <td class="px-4 py-3 text-slate-500 dark:text-slate-400">
+                {{ item.categoryName }}
+              </td>
               <td class="px-4 py-3 text-slate-700 dark:text-slate-300">
                 Rs {{ formatCurrency(item.price) }}
               </td>
@@ -276,7 +304,7 @@
                   "
                   class="rounded-full px-2 py-0.5 text-xs font-semibold"
                 >
-                  {{ item.available ? "Yes" : "No" }}
+                  {{ item.available ? 'Yes' : 'No' }}
                 </span>
               </td>
               <td class="px-4 py-3 text-right">
@@ -297,7 +325,10 @@
               </td>
             </tr>
             <tr v-if="!menuItems.length">
-              <td colspan="6" class="px-4 py-6 text-center text-slate-400 dark:text-slate-500">
+              <td
+                colspan="6"
+                class="px-4 py-6 text-center text-slate-400 dark:text-slate-500"
+              >
                 No menu items yet.
               </td>
             </tr>
@@ -309,25 +340,27 @@
 </template>
 
 <script setup>
-import { onMounted, reactive, ref } from "vue";
-import { MenuAPI } from "../api/index.js";
-import { formatCurrency } from "../utils/currency.js";
+import { onMounted, reactive, ref } from 'vue';
+import { MenuAPI } from '../api/index.js';
+import { useAlerts } from '../composables/useAlerts.js';
+import { formatCurrency } from '../utils/currency.js';
 
 const categories = ref([]);
 const menuItems = ref([]);
-const catError = ref("");
-const itemError = ref("");
+const catError = ref('');
+const itemError = ref('');
 const itemSaving = ref(false);
 const imageInput = ref(null);
+const { addAlert } = useAlerts();
 
-const catForm = reactive({ open: false, id: null, name: "", description: "" });
+const catForm = reactive({ open: false, id: null, name: '', description: '' });
 const itemForm = reactive({
   open: false,
   id: null,
-  name: "",
-  description: "",
-  price: "",
-  categoryId: "",
+  name: '',
+  description: '',
+  price: '',
+  categoryId: '',
   available: true,
   imageFile: null,
   previewUrl: null,
@@ -336,25 +369,29 @@ const itemForm = reactive({
 onMounted(load);
 
 async function load() {
-  [categories.value, menuItems.value] = await Promise.all([
-    MenuAPI.getCategories(),
-    MenuAPI.getItems(),
-  ]);
+  try {
+    [categories.value, menuItems.value] = await Promise.all([
+      MenuAPI.getCategories(),
+      MenuAPI.getItems(),
+    ]);
+  } catch (e) {
+    addAlert('Error loading data', 'error');
+  }
 }
 
 // ── Categories ──────────────────────────────────────────────────────
 function openCatForm(cat = null) {
-  catError.value = "";
+  catError.value = '';
   Object.assign(catForm, {
     open: true,
     id: cat?.id ?? null,
-    name: cat?.name ?? "",
-    description: cat?.description ?? "",
+    name: cat?.name ?? '',
+    description: cat?.description ?? '',
   });
 }
 
 async function saveCategory() {
-  catError.value = "";
+  catError.value = '';
   try {
     const payload = {
       name: catForm.name.trim(),
@@ -362,41 +399,46 @@ async function saveCategory() {
     };
     if (catForm.id) {
       await MenuAPI.updateCategory(catForm.id, payload);
+      addAlert('Category updated', 'success');
     } else {
       await MenuAPI.createCategory(payload);
+      addAlert('Category created', 'success');
     }
     catForm.open = false;
     categories.value = await MenuAPI.getCategories();
   } catch (e) {
     catError.value = e.message;
+    addAlert(e.message, 'error');
   }
 }
 
 async function deleteCategory(id) {
-  if (!confirm("Delete this category?")) return;
+  if (!confirm('Delete this category?')) return;
   try {
     await MenuAPI.deleteCategory(id);
+    addAlert('Category deleted', 'success');
     categories.value = await MenuAPI.getCategories();
   } catch (e) {
     catError.value = e.message;
+    addAlert(e.message, 'error');
   }
 }
 
 // ── Menu Items ──────────────────────────────────────────────────────
 function openItemForm(item = null) {
-  itemError.value = "";
+  itemError.value = '';
   Object.assign(itemForm, {
     open: true,
     id: item?.id ?? null,
-    name: item?.name ?? "",
-    description: item?.description ?? "",
-    price: item?.price ?? "",
-    categoryId: item?.categoryId ?? "",
+    name: item?.name ?? '',
+    description: item?.description ?? '',
+    price: item?.price ?? '',
+    categoryId: item?.categoryId ?? '',
     available: item?.available ?? true,
     imageFile: null,
     previewUrl: item?.imageUrl ?? null,
   });
-  if (imageInput.value) imageInput.value.value = "";
+  if (imageInput.value) imageInput.value.value = '';
 }
 
 function onImageChange(e) {
@@ -407,12 +449,12 @@ function onImageChange(e) {
 }
 
 async function saveItem() {
-  itemError.value = "";
+  itemError.value = '';
   itemSaving.value = true;
   try {
     const fd = new FormData();
     fd.append(
-      "data",
+      'data',
       new Blob(
         [
           JSON.stringify({
@@ -423,32 +465,37 @@ async function saveItem() {
             available: itemForm.available,
           }),
         ],
-        { type: "application/json" },
-      ),
+        { type: 'application/json' }
+      )
     );
-    if (itemForm.imageFile) fd.append("image", itemForm.imageFile);
+    if (itemForm.imageFile) fd.append('image', itemForm.imageFile);
 
     if (itemForm.id) {
       await MenuAPI.updateItem(itemForm.id, fd);
+      addAlert('Menu item updated', 'success');
     } else {
       await MenuAPI.createItem(fd);
+      addAlert('Menu item created', 'success');
     }
     itemForm.open = false;
     menuItems.value = await MenuAPI.getItems();
   } catch (e) {
     itemError.value = e.message;
+    addAlert(e.message, 'error');
   } finally {
     itemSaving.value = false;
   }
 }
 
 async function deleteItem(id) {
-  if (!confirm("Delete this menu item?")) return;
+  if (!confirm('Delete this menu item?')) return;
   try {
     await MenuAPI.deleteItem(id);
+    addAlert('Menu item deleted', 'success');
     menuItems.value = await MenuAPI.getItems();
   } catch (e) {
     itemError.value = e.message;
+    addAlert(e.message, 'error');
   }
 }
 </script>

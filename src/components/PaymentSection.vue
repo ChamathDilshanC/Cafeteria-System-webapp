@@ -121,12 +121,14 @@
 import { CheckCircle, RefreshCcw } from 'lucide-vue-next';
 import { onMounted, reactive, ref } from 'vue';
 import { OrderAPI } from '../api/index.js';
+import { useAlerts } from '../composables/useAlerts.js';
 import { formatCurrency } from '../utils/currency.js';
 
 const orders = ref([]);
 const loading = ref(false);
 const approving = ref(null);
 const errors = reactive({});
+const { addAlert } = useAlerts();
 
 onMounted(load);
 
@@ -136,6 +138,8 @@ async function load() {
     const data = await OrderAPI.getPendingPayment();
     // Filter out canceled orders so they don't show up in the payment section
     orders.value = data.filter(order => order.status !== 'CANCELLED');
+  } catch (e) {
+    addAlert('Failed to load pending payments', 'error');
   } finally {
     loading.value = false;
   }
@@ -146,9 +150,11 @@ async function approvePayment(id) {
   delete errors[id];
   try {
     await OrderAPI.verifyPayment(id);
+    addAlert(`Payment approved for order #${id}`, 'success');
     await load();
   } catch (e) {
     errors[id] = e.message;
+    addAlert(e.message, 'error');
   } finally {
     approving.value = null;
   }
