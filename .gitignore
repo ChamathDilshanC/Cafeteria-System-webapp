@@ -33,4 +33,3 @@ Thumbs.db
 # Node (for webapp)
 node_modules/
 dist/
-.env
